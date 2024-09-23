@@ -115,7 +115,8 @@ class Prompts:
                                                 i. Si no tienes información suficiente para responder a una consulta, preguta por mas detalle.\
                                                 ii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iii. Para formatos de montos utiliza $, elimina comas "," \
-                                                iv. Redacta una respuesta usando estos resultados de la busqueda en el catalogo:\
+                                                iv. Descarta enumerar la respuesta \
+                                                v. Redacta una respuesta usando estos resultados de la busqueda en el catalogo:\
                                                 {catalogo}',
                                                 text
                               )

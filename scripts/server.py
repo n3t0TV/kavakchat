@@ -13,7 +13,7 @@ class ChatStory:
     def __init__(self) -> None:
         self.story=''
     def addStoryMessage(self,msg):
-        self.story+=msg+'\n'
+        self.story=msg+'\n'
 '''
 Class to encapuslate all chat process flow
 '''
@@ -54,7 +54,7 @@ class ChatService:
     Input: JSON with search parameters, cataloj JSON with all car data
     Output: Message describing user the car found and the payment plans 
     '''
-    def processCalculo(self,resJson,catalogo):
+    def processCalculo(self,resJson,catalogo,story):
         
         print('JSON PARAMS')
         print(json.dumps(resJson))
@@ -69,7 +69,7 @@ class ChatService:
                 planPagos=DataAPI.calcular_plan_pagos(float(resSearch[0]['price']),0.1,3,6,0.2)
                 print('Plan de pagos')
                 print(planPagos)
-                resultString=Prompts.planPrompt(resJson,planPagos)
+                resultString=Prompts.planPrompt(resJson,planPagos,story)
                 
         return resultString
 

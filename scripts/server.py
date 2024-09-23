@@ -27,7 +27,7 @@ class ChatService:
     Input: User text and a JSON containing catalog data parsed from csv
     Output: Message to respond the user
     '''
-    def processCatalog(self,text,resJson,catalogo):
+    def processCatalog(self,text,resJson,catalogo,story):
         
         #To scale this prompt up to large datasets, extract search parameters from user text, then
         #filter catalog search in database using these parameters and finally use prompt to create message response using text provided by user
@@ -41,7 +41,7 @@ class ChatService:
                 bestmatches.extend(DataAPI.find_best_matches(params,catalogo))
             
             print(bestmatches)
-            resultString=Prompts.catalogPrompt(text,bestmatches)
+            resultString=Prompts.catalogPrompt(text,bestmatches,story)
      
         else:
             resultString='No pude encontrar ninguna opcion que coincida con lo que buscas'

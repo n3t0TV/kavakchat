@@ -203,7 +203,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     chatStory[userFrom]=ChatStory()
                 chatStory[userFrom].addStoryMessage(body_value)
                 chatStory[userFrom].addStoryMessage(response)
-                
+                print('STORY')
+                print(chatStory[userFrom].story)
                 response=chatservice.processRequest(body_value,chatStory[userFrom].story)
                 twilioresponse=sendTwilioResponse(userFrom,response)
                 # Respond to the client

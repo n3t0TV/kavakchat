@@ -9,8 +9,11 @@ import json
 from twilio.rest import Client
 
 
-
-        
+class chatStory:
+    def __init__(self) -> None:
+        self.story=''
+    def addStoryMessage(self,msg):
+        self.story+=msg+'\n'
 '''
 Class to encapuslate all chat process flow
 '''
@@ -75,28 +78,28 @@ class ChatService:
     Input: User input message and JSON indicaring classification response
     Output: Response to user
     '''
-    def processMessage(self,reqType,text):
+    def processMessage(self,reqType,text,story):
 
 
         resString=''
         if(reqType['tiposolicitud']=='plataforma'):
-            resString=Prompts.platformPrompt(text,self.webpage['plataforma'])
+            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],story)
         elif (reqType['tiposolicitud']=='sedes'):
-            resString=Prompts.sitesPrompt(text,self.webpage['sedes'])
+            resString=Prompts.sitesPrompt(text,self.webpage['sedes'],story)
         elif (reqType['tiposolicitud']=='pagos'):
-            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo)
+            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,story)
             if(resJson):
-                resString=self.processCalculo(resJson,self.catalogo)
+                resString=self.processCalculo(resJson,self.catalogo,story)
             else:
-                resString=Prompts.paymentPrompt(text,self.webpage['pagos'])
+                resString=Prompts.paymentPrompt(text,self.webpage['pagos'],story)
             
         elif  (reqType['tiposolicitud']=='catalogo'):
-            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo)
-            resString=self.processCatalog(text,resJson,self.catalogo)
+            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,story)
+            resString=self.processCatalog(text,resJson,self.catalogo,story)
         elif  (reqType['tiposolicitud']=='calculo'):
-            resString=self.processCalculo(text,self.catalogo)
+            resString=self.processCalculo(text,self.catalogo,story)
         else: #otro
-            resString=Prompts.platformPrompt(text,self.webpage['plataforma'])
+            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],story)
 
         return resString
 
@@ -105,7 +108,7 @@ class ChatService:
     Input: User text
     Output: Message response to user
     '''
-    def processRequest(self,text):
+    def processRequest(self,text,story):
         print('Processing prompt')
 
         resJson=Prompts.classifyPrompt(text)
@@ -113,7 +116,7 @@ class ChatService:
         resultString=''
         if(resJson):           
             print(resJson[0])
-            resultString=self.processMessage(resJson[0],text)
+            resultString=self.processMessage(resJson[0],text,story)
         return resultString
 
     def initializeData(self):
@@ -124,6 +127,7 @@ class ChatService:
 chatservice=ChatService()
 chatservice.initializeData()
 
+chatStory={}
 account_sid=''
 auth_token=''
 with open("../config.json", 'r') as file:
@@ -138,7 +142,7 @@ def sendTwilioResponse(numto,message):
     
     messageResponse = client.messages.create(
     from_='whatsapp:+14155238886',
-    to= urllib.parse.unquote(numto),#'whatsapp:+5215558059015'
+    to= numto,#'whatsapp:+5215558059015'
     body=message
     )
     print(messageResponse.sid)
@@ -193,9 +197,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 print(body_value)
                 # Log the received data
                 response=''
+                userFrom=urllib.parse.unquote(params.get('From'))
+                if( not userFrom in chatStory):
+                    chatStory[userFrom]=chatStory()
+                chatStory[userFrom].addStoryMessage(body_value)
+                chatStory[userFrom].addStoryMessage(response)
                 
-                response=chatservice.processRequest(body_value)
-                twilioresponse=sendTwilioResponse(params.get('From'),response)
+                response=chatservice.processRequest(body_value,chatStory[userFrom])
+                twilioresponse=sendTwilioResponse(userFrom,response)
                 # Respond to the client
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
@@ -222,7 +231,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         text = query.get('text')[0]
         print('Text: ',text)
         if(text):
-            response=chatservice.processRequest(text)
+            response=chatservice.processRequest(text,'')
         else:
             response=''
         self.send_response(200)

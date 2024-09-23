@@ -29,7 +29,7 @@ class Prompts:
     Input: Texto con datos de la empresa y la plataforma
     Output: Texto con mejor respuesta para el usuario
     '''
-    def platformPrompt(text,dataPlataforma):
+    def platformPrompt(text,dataPlataforma,story):
 
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
@@ -37,7 +37,10 @@ class Prompts:
                                                 ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
-                                                {dataPlataforma}',
+                                                {dataPlataforma} \
+                                                v. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
                                                 text
                               )
         print(resultString) 
@@ -48,14 +51,17 @@ class Prompts:
     Input: Texto con datos de sedes de la empresa
     Output: Texto con mejor respuesta para el usuario
     '''
-    def sitesPrompt(text,dataSites):
+    def sitesPrompt(text,dataSites,story):
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
-                                                {dataSites}',
+                                                {dataSites} \
+                                                v. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
                                                 text
                               )
         print(resultString) 
@@ -66,14 +72,17 @@ class Prompts:
     Input: Texto con datos de pagos de la empresa
     Output: Texto con mejor respuesta para el usuario
     '''
-    def paymentPrompt(text,dataPayments):
+    def paymentPrompt(text,dataPayments,story):
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
-                                                {dataPayments}',
+                                                {dataPayments} \
+                                                v. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
                                                 text
                               )
         print(resultString) 
@@ -84,7 +93,7 @@ class Prompts:
     Input: JSON con catalogo de autos
     Output: Json indicando mejor opcion segun parametros de busqueda o si no existe
     '''
-    def extraerParametrosPrompt(text,catalogo):
+    def extraerParametrosPrompt(text,catalogo,story):
 
         print('Searching car')
         resultString=openaiapi.promptChatJson(f'Necesitas extraer los datos de busqueda de cada auto incluidos en la solicitud de un usuario \
@@ -94,8 +103,10 @@ class Prompts:
                                                 iii. year: Año integer, Por ejemplo (2019, 2019)\
                                                 iv. version: Version, por ejemplo (Luxury,  Sedan, Adventure)\
                                                 v. maxprice: Precio maximo float, por ejemplo (200000,180000)\
-                                                Utilza solo los campos especificados en el listado anterior' \
-                                                ,
+                                                Utilza solo los campos especificados en el listado anterior \
+                                                vi. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
                                                 text
                                             )
         
@@ -104,7 +115,7 @@ class Prompts:
         print(resJson)
         return resJson
       
-    def catalogPrompt(text,catalogo):
+    def catalogPrompt(text,catalogo,story):
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
@@ -112,20 +123,26 @@ class Prompts:
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," \
                                                 vi. Utiliza esta informacion de referencia:\
-                                                {catalogo}',
+                                                {catalogo} \
+                                                v. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
                                                 text
                               )
         print(resultString) 
         return resultString
     
 
-    def planPrompt(resJson,planJson):
+    def planPrompt(resJson,planJson,story):
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
-                                                iv. Para formatos de montos utiliza $, elimina comas ","'
+                                                iv. Para formatos de montos utiliza $, elimina comas "," \
+                                                v. Considera el siguiente historial de la conversacion:\
+                                                {story}\
+                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales'
                                                 ,
                                                 f'Redacta una respuesta describiendo la informacion de la mejor opcion encontrada \
                                                 {resJson}\

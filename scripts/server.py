@@ -139,6 +139,10 @@ with open("../config.json", 'r') as file:
 
 
 def sendTwilioResponse(numto,message):
+
+    if(len(message)>1600):#max msg len
+        message=message[:1600]
+
     client = Client(account_sid, auth_token)
     
     messageResponse = client.messages.create(
@@ -207,6 +211,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 chatStory[userFrom].addStoryMessage(response)
                 print('STORY')
                 print(chatStory[userFrom].story)
+
                 twilioresponse=sendTwilioResponse(userFrom,response)
                 # Respond to the client
                 self.send_response(200)

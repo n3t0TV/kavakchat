@@ -143,13 +143,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         # Read the data sent in the POST request
         post_data = self.rfile.read(content_length)
         print('POST')
-
+        parsed_path = urllib.parse.urlparse(self.path)
         #To use subdomains
         if '/status' in parsed_path:
             print('Status callback')
             response=''
         else:
-            parsed_path = urllib.parse.urlparse(self.path)
+           
             print(parsed_path)
             print(post_data)
             # Parse the data (assuming it's URL encoded or JSON)

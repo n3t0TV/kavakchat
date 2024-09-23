@@ -135,11 +135,11 @@ with open("../config.json", 'r') as file:
 
 def sendTwilioResponse(to,message):
         client = Client(account_sid, auth_token)
-
+        
         message = client.messages.create(
         from_='whatsapp:+14155238886',
         to='whatsapp:'+to,
-        Body=message
+        body=message
         )
         print(message.sid)
 

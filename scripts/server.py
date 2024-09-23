@@ -133,12 +133,12 @@ with open("../config.json", 'r') as file:
     auth_token=config_data["account_token"]
 
 
-def sendTwilioResponse(to,message):
+def sendTwilioResponse(numto,message):
     client = Client(account_sid, auth_token)
     
     messageResponse = client.messages.create(
     from_='whatsapp:+14155238886',
-    to='whatsapp:+5215558059015',
+    to=numto,#'whatsapp:+5215558059015'
     body=message
     )
     print(messageResponse.sid)
@@ -194,8 +194,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 # Log the received data
                 response=''
                 
-                messageResponse=chatservice.processRequest(body_value)
-                response=sendTwilioResponse(params.get('From'),messageResponse)
+                response=chatservice.processRequest(body_value)
+                twilioresponse=sendTwilioResponse(params.get('From'),response)
                 # Respond to the client
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')

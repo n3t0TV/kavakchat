@@ -138,7 +138,7 @@ def sendTwilioResponse(to,message):
         
         message = client.messages.create(
         from_='whatsapp:+14155238886',
-        to='whatsapp:'+to,
+        to=to,
         body=message
         )
         print(message.sid)

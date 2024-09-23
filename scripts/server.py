@@ -41,7 +41,7 @@ class ChatService:
                 bestmatches.extend(DataAPI.find_best_matches(params,catalogo))
             
             print(bestmatches)
-            resultString=Prompts.catalogPrompt(text,bestmatches,story)
+            resultString=Prompts.catalogPrompt(text,bestmatches)
      
         else:
             resultString='No pude encontrar ninguna opcion que coincida con lo que buscas'

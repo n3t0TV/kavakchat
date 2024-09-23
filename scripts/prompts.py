@@ -117,9 +117,7 @@ class Prompts:
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," \
                                                 vi. Utiliza esta informacion de referencia:\
-                                                {catalogo} \
-                                                v. Considera el siguiente historial de la conversacion:\
-                                                {story}',
+                                                {catalogo}',
                                                 text
                               )
         print(resultString) 

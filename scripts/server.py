@@ -14,6 +14,8 @@ class ChatStory:
         self.story=[]
     def addStoryMessage(self,role,msg):
         self.story.append({"role": role, "content": msg})
+        if(len(self.story)>5):#MAx 5 messages history to avoid huge prompts
+            self.story.pop()
 '''
 Class to encapuslate all chat process flow
 '''

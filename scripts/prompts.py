@@ -67,13 +67,13 @@ class Prompts:
     Output: Texto con mejor respuesta para el usuario
     '''
     def paymentPrompt(text,dataPayments,story):
-        resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
+        resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta,no inventes.\
-                                                iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
-                                                iv. Redacta una respuesta con la informacion de pagos',
-                                                dataPayments
+                                                iii. Descarta sugerir comunicarse con representate de soporte de Kavak',
+                                                f'Redacta una respuesta con la informacion de pagos \
+                                                {dataPayments}'
                               )
         print(resultString) 
         return resultString

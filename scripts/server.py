@@ -202,10 +202,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 if( not userFrom in chatStory):
                     chatStory[userFrom]=ChatStory()
                 #chatStory[userFrom].addStoryMessage(body_value)
+                
+                response=chatservice.processRequest(body_value,chatStory[userFrom].story)
                 chatStory[userFrom].addStoryMessage(response)
                 print('STORY')
                 print(chatStory[userFrom].story)
-                response=chatservice.processRequest(body_value,chatStory[userFrom].story)
                 twilioresponse=sendTwilioResponse(userFrom,response)
                 # Respond to the client
                 self.send_response(200)

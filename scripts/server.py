@@ -145,33 +145,35 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         print('POST')
 
         #To use subdomains
-        #if '/chat' in parsed_path:
-       
-        parsed_path = urllib.parse.urlparse(self.path)
-        print(parsed_path)
-        print(post_data)
-        # Parse the data (assuming it's URL encoded or JSON)
-        try:
-            # If JSON
-            decoded_string = post_data.decode('utf-8')
-            post_data = json_repair.loads(decoded_string)
-           
-        except json.JSONDecodeError:
-            # If URL encoded
-            print('ENCODE error')
-            post_data = urllib.parse.parse_qs(post_data.decode('utf-8'))
-        print('DATA JSON')
-        print(post_data)
-        # Log the received data
-        response=''
-        if('text' in post_data):
-            response=chatservice.processRequest(post_data['text'])
-        # Respond to the client
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        byte_data = response.encode('utf-8')
-        self.wfile.write(byte_data)
+        if '/status' in parsed_path:
+            print('Status callback')
+            response=''
+        else:
+            parsed_path = urllib.parse.urlparse(self.path)
+            print(parsed_path)
+            print(post_data)
+            # Parse the data (assuming it's URL encoded or JSON)
+            try:
+                # If JSON
+                decoded_string = post_data.decode('utf-8')
+                post_data = json_repair.loads(decoded_string)
+            
+            except json.JSONDecodeError:
+                # If URL encoded
+                print('ENCODE error')
+                post_data = urllib.parse.parse_qs(post_data.decode('utf-8'))
+            print('DATA JSON')
+            print(post_data)
+            # Log the received data
+            response=''
+            if('Body' in post_data):
+                response=chatservice.processRequest(post_data['Body'])
+            # Respond to the client
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            byte_data = response.encode('utf-8')
+            self.wfile.write(byte_data)
         
     '''
     Process http GET requests

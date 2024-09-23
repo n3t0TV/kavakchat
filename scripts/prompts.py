@@ -34,7 +34,7 @@ class Prompts:
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
-                                                ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
+                                                ii. Si no estás seguro de la respuesta, no inventes.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataPlataforma} \
@@ -53,7 +53,7 @@ class Prompts:
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
-                                                ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
+                                                ii. Si no estás seguro de la respuesta, no inventes.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataSites} \
@@ -72,7 +72,7 @@ class Prompts:
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
-                                                ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
+                                                ii. Si no estás seguro de la respuesta,no inventes.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataPayments} \
@@ -113,7 +113,7 @@ class Prompts:
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
-                                                ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
+                                                ii. Si no estás seguro de la respuesta, no inventes.\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," \
                                                 vi. Utiliza esta informacion de referencia:\
@@ -128,7 +128,7 @@ class Prompts:
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
-                                                ii. Si no estás seguro de la respuesta, es mejor no especular. Indica que no tienes información suficiente.\
+                                                ii. Si no estás seguro de la respuesta, no inventes\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," \
                                                 v. Considera el siguiente historial de la conversacion:\

@@ -201,7 +201,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 userFrom=urllib.parse.unquote(params.get('From'))
                 if( not userFrom in chatStory):
                     chatStory[userFrom]=ChatStory()
-                chatStory[userFrom].addStoryMessage(body_value)
+                #chatStory[userFrom].addStoryMessage(body_value)
                 chatStory[userFrom].addStoryMessage(response)
                 print('STORY')
                 print(chatStory[userFrom].story)

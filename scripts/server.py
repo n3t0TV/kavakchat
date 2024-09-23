@@ -193,6 +193,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 response=''
                 
                 response=chatservice.processRequest(body_value)
+                sendTwilioResponse(params.get('From'))
                 # Respond to the client
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')

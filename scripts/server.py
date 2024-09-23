@@ -11,9 +11,9 @@ from twilio.rest import Client
 
 class ChatStory:
     def __init__(self) -> None:
-        self.story=''
-    def addStoryMessage(self,msg):
-        self.story=msg+'\n'
+        self.story=[]
+    def addStoryMessage(self,role,msg):
+        self.story.append({"role": role, "content": msg})
 '''
 Class to encapuslate all chat process flow
 '''
@@ -41,7 +41,7 @@ class ChatService:
                 bestmatches.extend(DataAPI.find_best_matches(params,catalogo))
             
             print(bestmatches)
-            resultString=Prompts.catalogPrompt(text,bestmatches)
+            resultString=Prompts.catalogPrompt(text,bestmatches,story)
      
         else:
             resultString='No pude encontrar ninguna opcion que coincida con lo que buscas'
@@ -112,7 +112,7 @@ class ChatService:
         print('Processing prompt')
         print('Story')
         print(story)
-        resJson=Prompts.classifyPrompt(text)
+        resJson=Prompts.classifyPrompt(text,story)
         
         resultString=''
         if(resJson):           
@@ -205,10 +205,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 userFrom=urllib.parse.unquote(params.get('From'))
                 if( not userFrom in chatStory):
                     chatStory[userFrom]=ChatStory()
-                #chatStory[userFrom].addStoryMessage(body_value)
-                
+                    
+
+                chatStory[userFrom].addStoryMessage("user",body_value)  
                 response=chatservice.processRequest(body_value,chatStory[userFrom].story)
-                chatStory[userFrom].addStoryMessage(response)
+                chatStory[userFrom].addStoryMessage("assistant",response)
                 print('STORY')
                 print(chatStory[userFrom].story)
 

@@ -153,25 +153,35 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             print(parsed_path)
             print(post_data)
             # Parse the data (assuming it's URL encoded or JSON)
+            body_value=''
             try:
                 # If JSON
                 decoded_string = post_data.decode('utf-8')
-                post_data = json_repair.loads(decoded_string)
+                params = dict(param.split('=') for param in decoded_string.split('&'))
+
+                #post_data = json_repair.loads(decoded_string)
             
             except json.JSONDecodeError:
                 # If URL encoded
                 print('ENCODE error')
                 post_data = urllib.parse.parse_qs(post_data.decode('utf-8'))
-            print('DATA JSON')
-            print(post_data)
-            # Log the received data
-            response=''
-            if('Body' in post_data):
-                response=chatservice.processRequest(post_data['Body'])
-            # Respond to the client
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
+                params = dict(param.split('=') for param in decoded_string.split('&'))
+                
+            if('Body' in params):
+                body_value = params.get('Body')
+
+                print('DATA JSON')
+                print(body_value)
+                # Log the received data
+                response=''
+                
+                response=chatservice.processRequest(body_value)
+                # Respond to the client
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+            else:
+                print('Empty body!')
             byte_data = response.encode('utf-8')
             self.wfile.write(byte_data)
         

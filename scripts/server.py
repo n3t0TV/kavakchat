@@ -6,7 +6,7 @@ import urllib.parse
 from prompts import Prompts
 import json_repair
 import json
-
+from twilio.rest import Client
 
 
 
@@ -124,6 +124,23 @@ class ChatService:
 chatservice=ChatService()
 chatservice.initializeData()
 
+account_sid=''
+auth_token=''
+with open("../config.json", 'r') as file:
+    print('Loading twilio api key')
+    config_data = json.load(file)
+    account_sid=config_data["account_sid"]
+    auth_token=config_data["account_token"]
+
+
+def sendTwilioResponse(to):
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        to='whatsapp:'+to
+        )
+        print(message.sid)
 
 '''
 Endpoints
@@ -144,10 +161,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         post_data = self.rfile.read(content_length)
         print('POST')
         parsed_path = urllib.parse.urlparse(self.path)
+        response=''
         #To use subdomains
         if '/status' in parsed_path:
             print('Status callback')
-            response=''
+            
         else:
            
             print(parsed_path)
@@ -166,10 +184,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 print('ENCODE error')
                 post_data = urllib.parse.parse_qs(post_data.decode('utf-8'))
                 params = dict(param.split('=') for param in decoded_string.split('&'))
-                
+            print(params)
             if('Body' in params):
                 body_value = params.get('Body')
-
                 print('DATA JSON')
                 print(body_value)
                 # Log the received data

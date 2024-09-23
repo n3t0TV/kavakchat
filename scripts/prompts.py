@@ -108,9 +108,9 @@ class Prompts:
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, preguta por mas detalle.\
                                                 ii. Descarta sugerir comunicarse con representate de soporte de Kavak \
-                                                iii. Para formatos de montos utiliza $, elimina comas "," \
-                                                iv. Redacta una respuesta usando estos resultados de la busqueda en el catalogo',
-                                                catalogo
+                                                iii. Para formatos de montos utiliza $, elimina comas "," '\
+                                                f'Describe los autos del siguiente catalogo \
+                                                {catalogo}'
                               )
         print(resultString) 
         return resultString

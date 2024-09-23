@@ -9,8 +9,9 @@ class Prompts:
     '''
     def classifyPrompt(text,story):
         print('Classifying prompt')
-        resultString=openaiapi.promptChatJsonStory('Necesitas clasificar un texto enviado por un usuario para determinar el tipo de solicitud. El resultado sera utilizado para decidir el flujo en un sistema',
-                               f'Genera un objeto JSON con las siguientes llaves: \
+        resultString=openaiapi.promptChatJsonStory(
+                               f'Necesitas clasificar un texto enviado por un usuario para determinar el tipo de solicitud. El resultado sera utilizado para decidir el flujo en un sistema\
+                               Genera un objeto JSON con las siguientes llaves: \
                                1. "tiposolicitud: Indica el tipo de solicitud dentro de las siguientes opciones" ["plataforma","pagos","sedes","catalogo","calculo","otro"] \
                                i. plataforma: mensajes que tienen que ver con que es kavak, a que se dedica la empresa, como funcina la plataforma, que solucion de negocio resuelve, dudas de la tecnologia, beneficios de comprar o vender en la plataforma, presencia en la industria\
                                ii. sedes: mensajes que tienen que ver con las sucursales, diraccion, ciudades en donde se tiene presencia. ubicacion de centros de inspeccion \

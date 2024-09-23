@@ -39,9 +39,7 @@ class Prompts:
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataPlataforma} \
                                                 v. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
-                                                text
+                                                {story}',text
                               )
         print(resultString) 
         return resultString
@@ -60,9 +58,7 @@ class Prompts:
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataSites} \
                                                 v. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
-                                                text
+                                                {story}',text
                               )
         print(resultString) 
         return resultString
@@ -81,9 +77,8 @@ class Prompts:
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataPayments} \
                                                 v. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
-                                                text
+                                                {story}'
+                                                ,text
                               )
         print(resultString) 
         return resultString
@@ -105,8 +100,7 @@ class Prompts:
                                                 v. maxprice: Precio maximo float, por ejemplo (200000,180000)\
                                                 Utilza solo los campos especificados en el listado anterior \
                                                 vi. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
+                                                {story}',
                                                 text
                                             )
         
@@ -125,8 +119,7 @@ class Prompts:
                                                 vi. Utiliza esta informacion de referencia:\
                                                 {catalogo} \
                                                 v. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales',
+                                                {story}',
                                                 text
                               )
         print(resultString) 
@@ -141,9 +134,7 @@ class Prompts:
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," \
                                                 v. Considera el siguiente historial de la conversacion:\
-                                                {story}\
-                                                vi. Algunas preguntas que puedes hacer son: Como funciona kavak,Informacion sobre alguna marca o modelo de auto,Planes de financiamiento de un modelo, Donde estan las sucursales'
-                                                ,
+                                                {story}',
                                                 f'Redacta una respuesta describiendo la informacion de la mejor opcion encontrada \
                                                 {resJson}\
                                                 Describe los planes de pagos para este auto con el siguiente JSON: \

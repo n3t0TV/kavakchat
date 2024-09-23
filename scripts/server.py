@@ -110,7 +110,8 @@ class ChatService:
     '''
     def processRequest(self,text,story):
         print('Processing prompt')
-
+        print('Story')
+        print(story)
         resJson=Prompts.classifyPrompt(text)
         
         resultString=''
@@ -203,7 +204,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 chatStory[userFrom].addStoryMessage(body_value)
                 chatStory[userFrom].addStoryMessage(response)
                 
-                response=chatservice.processRequest(body_value,chatStory[userFrom])
+                response=chatservice.processRequest(body_value,chatStory[userFrom].story)
                 twilioresponse=sendTwilioResponse(userFrom,response)
                 # Respond to the client
                 self.send_response(200)

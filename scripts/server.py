@@ -9,7 +9,7 @@ import json
 from twilio.rest import Client
 
 
-class chatStory:
+class ChatStory:
     def __init__(self) -> None:
         self.story=''
     def addStoryMessage(self,msg):
@@ -199,7 +199,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 response=''
                 userFrom=urllib.parse.unquote(params.get('From'))
                 if( not userFrom in chatStory):
-                    chatStory[userFrom]=chatStory()
+                    chatStory[userFrom]=ChatStory()
                 chatStory[userFrom].addStoryMessage(body_value)
                 chatStory[userFrom].addStoryMessage(response)
                 

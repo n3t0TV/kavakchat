@@ -43,7 +43,7 @@ class ChatService:
                 bestmatches.extend(DataAPI.find_best_matches(params,catalogo))
             
             print(bestmatches)
-            chatStory.addStoryMessage("assistant",f'Describe los autos del siguiente catalogo considerando la solciitud del usuario {catalogo}')
+            chatStory.addStoryMessage("user",f'Describe los autos del siguiente catalogo considerando la solciitud del usuario {catalogo}')
             resultString=Prompts.catalogPrompt(text,bestmatches,chatStory)
      
         else:
@@ -72,7 +72,7 @@ class ChatService:
                 planPagos=DataAPI.calcular_plan_pagos(float(resSearch[0]['price']),0.1,3,6,0.2)
                 print('Plan de pagos')
                 print(planPagos)
-                chatStory.addStoryMessage("assistant",f'Describe los planes de pagos para este auto con el siguiente JSON: {catalogo}')
+                chatStory.addStoryMessage("user",f'Describe los planes de pagos para este auto con el siguiente JSON: {catalogo}')
                 resultString=Prompts.planPrompt(resJson,planPagos,chatStory)
                 
         return resultString

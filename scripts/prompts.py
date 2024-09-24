@@ -87,7 +87,7 @@ class Prompts:
     def extraerParametrosPrompt(text,catalogo,chatStory):
 
         print('Searching car')
-        story.append
+        
         resultString=openaiapi.promptChatJsonStory(f'Necesitas extraer los datos de busqueda de cada auto incluidos en la solicitud de un usuario \
                                                  Genera un objeto JSON con los datos de la busqueda  \
                                                 i. model: Nombre del modelo string, por ejemplo (Mazda, Vento, Corolla, Journey)\

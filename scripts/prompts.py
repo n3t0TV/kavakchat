@@ -18,7 +18,8 @@ class Prompts:
                                iii. pagos: mensajes que tienen que ver con planes de compra, planes de venta, formas de pago, medios de pago, planes de pago, proceso de pago, documentacion necesaria, periodos de prueba, devoluciones, garantias, servicios de mantenimiento \
                                iv. catalogo: mensajes que tengan que ver con  busquedas en catalogo de autos, modelos disponibles, marcas, año de fabricacion, version de autos, precios, dimensiones de autos \
                                v. otros: otros mensajes no incluidos en los puntos anteriores',
-                               story
+                               f'Clasifica el texto del usuario \
+                               {text}'
                               )
         print(resultString)                    
         resJson = openaiapi.extract_json_objects(resultString)

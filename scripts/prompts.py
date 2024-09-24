@@ -116,7 +116,7 @@ class Prompts:
         return resultString
     
 
-    def planPrompt(resJson,planJson,chatStory):
+    def planPrompt(resJson,planJson,story):
 
         '''f'Considera el siguiente historial de la conversacion:\
                                                 {story} \,
@@ -124,13 +124,13 @@ class Prompts:
                                                 {resJson} \
                                                 '''
                                
-        resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
+        resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta, no inventes\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Para formatos de montos utiliza $, elimina comas "," ',
-                                                chatStory.story
+                                                story
                                                 
                                                 
                               )

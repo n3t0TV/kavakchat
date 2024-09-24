@@ -72,7 +72,7 @@ class ChatService:
                 planPagos=DataAPI.calcular_plan_pagos(float(resSearch[0]['price']),0.1,3,6,0.2)
                 print('Plan de pagos')
                 print(planPagos)
-                chatStory.addStoryMessage("assistant",f'Describe los planes de pagos del siguiente JSON: {planPagos}')
+                chatStory.addStoryMessage("assistant",f'Describe los planes de pagos del siguiente JSON: {planPagos}, especifica al inicio el detalle del auto')
                 resultString=Prompts.planPrompt(resJson,planPagos,chatStory.story)
                 
         return resultString

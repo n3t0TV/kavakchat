@@ -9,7 +9,7 @@ class Prompts:
     '''
     def classifyPrompt(text,story):
         print('Classifying prompt')
-        resultString=openaiapi.promptChatJsonStory(
+        resultString=openaiapi.promptChatJson(
                                f'Necesitas clasificar un texto enviado por un usuario para determinar el tipo de solicitud. El resultado sera utilizado para decidir el flujo en un sistema\
                                Genera un objeto JSON con las siguientes llaves: \
                                1. "tiposolicitud: Indica el tipo de solicitud dentro de las siguientes opciones" ["plataforma","pagos","sedes","catalogo","calculo","otro"] \

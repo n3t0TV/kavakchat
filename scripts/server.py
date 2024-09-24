@@ -15,7 +15,7 @@ class ChatStory:
     def addStoryMessage(self,role,msg):
         self.story.append({"role": role, "content": msg})
         if(len(self.story)>5):#MAx 5 messages history to avoid huge prompts
-            self.story.pop()
+            self.story=self.story[1:]
 '''
 Class to encapuslate all chat process flow
 '''
@@ -73,7 +73,7 @@ class ChatService:
                 print('Plan de pagos')
                 print(planPagos)
                 chatStory.addStoryMessage("assistant",f'Describe los planes de pagos para este auto con el siguiente JSON: {planPagos}')
-                resultString=Prompts.planPrompt(resJson,planPagos,chatStory)
+                resultString=Prompts.planPrompt(resJson,planPagos,[chatStory.story[-1]])
                 
         return resultString
 

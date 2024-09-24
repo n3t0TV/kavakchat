@@ -15,7 +15,7 @@ class Prompts:
                                1. "tiposolicitud: Indica el tipo de solicitud dentro de las siguientes opciones" ["plataforma","pagos","sedes","catalogo","calculo","otro"] \
                                i. plataforma: mensajes que tienen que ver con que es kavak, a que se dedica la empresa, como funcina la plataforma, que solucion de negocio resuelve, dudas de la tecnologia, beneficios de comprar o vender en la plataforma, presencia en la industria\
                                ii. sedes: mensajes que tienen que ver con las sucursales, diraccion, ciudades en donde se tiene presencia. ubicacion de centros de inspeccion \
-                               iii. pagos: mensajes que tienen que ver con planes de compra, planes de venta, formas de pago, medios de pago, planes de pago, proceso de pago, documentacion necesaria, periodos de prueba, devoluciones, garantias, servicios de mantenimiento \
+                               iii. pagos: mensajes que tienen que ver con planes de compra, planes de venta, formas de pago, medios de pago, planes de pago, proceso de pago, documentacion necesaria, periodos de prueba, devoluciones, garantias, servicios de mantenimiento,solicitud de compra \
                                iv. catalogo: mensajes que tengan que ver con  busquedas en catalogo de autos, modelos disponibles, marcas, año de fabricacion, version de autos, precios, dimensiones de autos \
                                v. otros: otros mensajes no incluidos en los puntos anteriores',
                                f'Clasifica el texto del usuario \

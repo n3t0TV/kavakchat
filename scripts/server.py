@@ -29,7 +29,7 @@ class ChatService:
     Input: User text and a JSON containing catalog data parsed from csv
     Output: Message to respond the user
     '''
-    def processCatalog(self,text,resJson,catalogo,story):
+    def processCatalog(self,text,resJson,catalogo,chatStory):
         
         #To scale this prompt up to large datasets, extract search parameters from user text, then
         #filter catalog search in database using these parameters and finally use prompt to create message response using text provided by user
@@ -43,7 +43,8 @@ class ChatService:
                 bestmatches.extend(DataAPI.find_best_matches(params,catalogo))
             
             print(bestmatches)
-            resultString=Prompts.catalogPrompt(text,bestmatches,story)
+            chatStory.addStoryMessage("assistant",f'Describe los autos del siguiente catalogo considerando la solciitud del usuario {catalogo}')
+            resultString=Prompts.catalogPrompt(text,bestmatches,chatStory)
      
         else:
             resultString='No pude encontrar ninguna opcion que coincida con lo que buscas'
@@ -56,7 +57,7 @@ class ChatService:
     Input: JSON with search parameters, cataloj JSON with all car data
     Output: Message describing user the car found and the payment plans 
     '''
-    def processCalculo(self,resJson,catalogo,story):
+    def processCalculo(self,resJson,catalogo,chatStory):
         
         print('JSON PARAMS')
         print(json.dumps(resJson))
@@ -71,7 +72,8 @@ class ChatService:
                 planPagos=DataAPI.calcular_plan_pagos(float(resSearch[0]['price']),0.1,3,6,0.2)
                 print('Plan de pagos')
                 print(planPagos)
-                resultString=Prompts.planPrompt(resJson,planPagos,story)
+                chatStory.addStoryMessage("assistant",f'Describe los planes de pagos para este auto con el siguiente JSON: {catalogo}')
+                resultString=Prompts.planPrompt(resJson,planPagos,chatStory)
                 
         return resultString
 
@@ -80,28 +82,29 @@ class ChatService:
     Input: User input message and JSON indicaring classification response
     Output: Response to user
     '''
-    def processMessage(self,reqType,text,story):
+    def processMessage(self,reqType,text,chatStory):
 
 
         resString=''
         if(reqType['tiposolicitud']=='plataforma'):
-            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],story)
+            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],chatStory)
         elif (reqType['tiposolicitud']=='sedes'):
-            resString=Prompts.sitesPrompt(text,self.webpage['sedes'],story)
+            resString=Prompts.sitesPrompt(text,self.webpage['sedes'],chatStory)
         elif (reqType['tiposolicitud']=='pagos'):
-            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,story)
+            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,chatStory)
             if(resJson):
-                resString=self.processCalculo(resJson,self.catalogo,story)
+
+                resString=self.processCalculo(resJson,self.catalogo,chatStory)
             else:
-                resString=Prompts.paymentPrompt(text,self.webpage['pagos'],story)
+                resString=Prompts.paymentPrompt(text,self.webpage['pagos'],chatStory)
             
         elif  (reqType['tiposolicitud']=='catalogo'):
-            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,story)
-            resString=self.processCatalog(text,resJson,self.catalogo,story)
+            resJson=Prompts.extraerParametrosPrompt(text,self.catalogo,chatStory)
+            resString=self.processCatalog(text,resJson,self.catalogo,chatStory)
         elif  (reqType['tiposolicitud']=='calculo'):
-            resString=self.processCalculo(text,self.catalogo,story)
+            resString=self.processCalculo(text,self.catalogo,chatStory)
         else: #otro
-            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],story)
+            resString=Prompts.platformPrompt(text,self.webpage['plataforma'],chatStory)
 
         return resString
 
@@ -110,16 +113,16 @@ class ChatService:
     Input: User text
     Output: Message response to user
     '''
-    def processRequest(self,text,story):
+    def processRequest(self,text,chatStory):
         print('Processing prompt')
         print('Story')
-        print(story)
-        resJson=Prompts.classifyPrompt(text,story)
+        print(chatStory.story)
+        resJson=Prompts.classifyPrompt(text,chatStory.story)
         
         resultString=''
         if(resJson):           
             print(resJson[0])
-            resultString=self.processMessage(resJson[0],text,story)
+            resultString=self.processMessage(resJson[0],text,chatStory)
         return resultString
 
     def initializeData(self):
@@ -210,7 +213,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     
 
                 chatStory[userFrom].addStoryMessage("user",body_value)  
-                response=chatservice.processRequest(body_value,chatStory[userFrom].story)
+                response=chatservice.processRequest(body_value,chatStory[userFrom])
                 chatStory[userFrom].addStoryMessage("assistant",response)
                 print('STORY')
                 print(chatStory[userFrom].story)

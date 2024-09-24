@@ -7,7 +7,7 @@ class Prompts:
     Input: Mensaje del usuario
     Output: JSON con tipo de solicitud
     '''
-    def classifyPrompt(text,story):
+    def classifyPrompt(text,chatStory):
         print('Classifying prompt')
         resultString=openaiapi.promptChatJson(
                                f'Necesitas clasificar un texto enviado por un usuario para determinar el tipo de solicitud. El resultado sera utilizado para decidir el flujo en un sistema\
@@ -30,7 +30,7 @@ class Prompts:
     Input: Texto con datos de la empresa y la plataforma
     Output: Texto con mejor respuesta para el usuario
     '''
-    def platformPrompt(text,dataPlataforma,story):
+    def platformPrompt(text,dataPlataforma,chatStory):
 
         resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
@@ -39,7 +39,7 @@ class Prompts:
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataPlataforma}',
-                                                story
+                                                chatStory.story
                               )
         print(resultString) 
         return resultString
@@ -49,7 +49,7 @@ class Prompts:
     Input: Texto con datos de sedes de la empresa
     Output: Texto con mejor respuesta para el usuario
     '''
-    def sitesPrompt(text,dataSites,story):
+    def sitesPrompt(text,dataSites,chatStory):
         resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
@@ -57,7 +57,7 @@ class Prompts:
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iv. Utiliza esta informacion de referencia:\
                                                 {dataSites}',
-                                                story
+                                                chatStory.story
                               )
         print(resultString) 
         return resultString
@@ -67,7 +67,7 @@ class Prompts:
     Input: Texto con datos de pagos de la empresa
     Output: Texto con mejor respuesta para el usuario
     '''
-    def paymentPrompt(text,dataPayments,story):
+    def paymentPrompt(text,dataPayments,chatStory):
         resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
@@ -84,7 +84,7 @@ class Prompts:
     Input: JSON con catalogo de autos
     Output: Json indicando mejor opcion segun parametros de busqueda o si no existe
     '''
-    def extraerParametrosPrompt(text,catalogo,story):
+    def extraerParametrosPrompt(text,catalogo,chatStory):
 
         print('Searching car')
         story.append
@@ -96,7 +96,7 @@ class Prompts:
                                                 iv. version: Version, por ejemplo (Luxury,  Sedan, Adventure)\
                                                 v. maxprice: Precio maximo float, por ejemplo (200000,180000)\
                                                 Utilza solo los campos especificados en el listado anterior',
-                                                story                                             
+                                                chatStory.story                                             
                                             )
         
         resJson = openaiapi.extract_json_objects(resultString)
@@ -104,35 +104,35 @@ class Prompts:
         print(resJson)
         return resJson
       
-    def catalogPrompt(text,catalogo,story):
-        resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
+    def catalogPrompt(text,catalogo,chatStory):
+        resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, preguta por mas detalle.\
                                                 ii. Descarta sugerir comunicarse con representate de soporte de Kavak \
                                                 iii. Para formatos de montos utiliza $, elimina comas "," ',
-                                                f'Describe los autos del siguiente catalogo \
-                                                {catalogo}'
+                                                chatStory.story
                               )
         print(resultString) 
         return resultString
     
 
-    def planPrompt(resJson,planJson,story):
+    def planPrompt(resJson,planJson,chatStory):
 
         '''f'Considera el siguiente historial de la conversacion:\
                                                 {story} \,
                                                 Redacta una respuesta describiendo la informacion de la mejor opcion encontrada \
                                                 {resJson} \
                                                 '''
-                                                
-        resultString=openaiapi.promptChatText(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
+                               
+        resultString=openaiapi.promptChatTextStory(f'Eres un asistente de soporte al cliente para Kavak, que ofrece una plataforma para servicios de compra y venta de autos usados. Tu tarea es proporcionar respuestas precisas y utiles.\
                                               Reglas\
                                                 i. Si no tienes información suficiente para responder a una consulta, indícalo claramente y sugiere al usuario que se comunique con un representante de soporte para obtener más ayuda.\
                                                 ii. Si no estás seguro de la respuesta, no inventes\
                                                 iii. Descarta sugerir comunicarse con representate de soporte de Kavak \
-                                                iv. Para formatos de montos utiliza $, elimina comas "," ',                                        
-                                                f'Describe los planes de pagos para este auto con el siguiente JSON: \
-                                                {planJson}'
+                                                iv. Para formatos de montos utiliza $, elimina comas "," ',
+                                                chatStory.story
+                                                
+                                                
                               )
         print(resultString) 
         return resultString
